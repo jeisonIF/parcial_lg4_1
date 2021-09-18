@@ -1,4 +1,4 @@
-from re import I
+import re
 from config.db import CONECTION
 import re
 newUser ={
@@ -23,24 +23,16 @@ def crearUsuario(nombre, email, contrasena):
 def registro():
   print('Registro de usuarios')
   newUser ={
-    'nombre' :ingresoValidar('Nombre'),
-    'email' :ingresoValidar('Email'),
-    'contrasena' : ingresoValidar('Contraseña')
+    'nombre' :validar('Nombre'),
+    'email' :validar('Email'),
+    'contrasena' : contra()
     }
+  crearUsuario(newUser)
 
 
 
-def ingresoValidar(info):
-  
-  if(info=='Nombre'):
-    print('nombre')   
-  elif (info=='Email'):
-    print('email')
-  elif (info=='Contraseña'):
-    print('contra') 
-    contra()          
-  
 def contra():
+  
   def valip(contra):
     regex = re.compile('^(?=\S{0,8}$)(?=.*?\d)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[^A-Za-z\s0-9])')
     return bool(regex.search(contra))
@@ -49,21 +41,33 @@ def contra():
   while bandera!=True:
     contrasena = input('Ingrese Contraseña: ')
     if(valip(contrasena)==True):
-      bandera = True        
+      bandera = True      
+
+def email():
+  
+  def valip(email):
+    pattern = r'^([a-z,\.,A-Z,0-9]{3,25})@([a-z]{4,}).com$'
     
+    return re.search(pattern, email)
+  email =''
+  bandera = False
+  while bandera!=True:
+    email = input('Ingrese Email: ')
+    if(valip(email)==True):
+      bandera = True      
+    
+ 
 
-
-def validarNombre(info):
-    dato =""
-    bandera = 1
-                
-    while bandera!=0:
-        dato = input('Ingrese '+info+': ')
-        if not dato:
-            print("Porfavor ingrese")        
-        else:
-            print("Se registro "+info)
-            return dato
+def validar(info):
+  dato =""
+  bandera = 1
+  while bandera!=0:
+    dato = input('Ingrese '+info+': ')
+    if not dato:
+      print("Porfavor ingrese")        
+    else:
+      print("Se registro "+info)
+      return dato
 '''Crear una aplicación de consola en Python, 
 que me permita registrar e iniciar usuarios. 
 La aplicación debe tener un menú con dos opciones: 
