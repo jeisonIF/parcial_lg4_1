@@ -5,16 +5,15 @@ newUser ={
   'nombre' :'',
   'email' :'',
   'contrasena' :''}
-def crearUsuario(nombre, email, contrasena):
+def crearUsuario(usuario):
     cursor = CONECTION.cursor()
     
     cursor.execute('''insert into 
         usuarios(nombre_user, email_user, contrasenaa_user)
-        values(%s, %s, %s)''', (
-          nombre,
-          email,
-          contrasena,
-        ))
+        values(%s, %s, %s)''',
+        (usuario['nombre'],
+        usuario['email'],
+        usuario['contrasena']))
     
     #Creacion, modificacion, eliminacion de datos
     CONECTION.commit()
@@ -25,13 +24,13 @@ def registro():
   newUser ={
     'nombre' :validar('Nombre'),
     'email' :validar('Email'),
-    'contrasena' : contra()
+    'contrasena' : validar('Contraseña')
     }
   crearUsuario(newUser)
 
 
 
-def contra():
+'''def contra():
   
   def valip(contra):
     regex = re.compile('^(?=\S{0,8}$)(?=.*?\d)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[^A-Za-z\s0-9])')
@@ -56,7 +55,7 @@ def email():
     if(valip(email)==True):
       bandera = True      
     
- 
+''' 
 
 def validar(info):
   dato =""
